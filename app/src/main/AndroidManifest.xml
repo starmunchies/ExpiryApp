@@ -28,6 +28,11 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".ui.home.viewItem"
+            tools:ignore="Instantiatable" />
+
+        <activity android:name=".ui.home.updateItem"
+            tools:ignore="Instantiatable" />
 
         <activity
             android:name=".MainActivity"

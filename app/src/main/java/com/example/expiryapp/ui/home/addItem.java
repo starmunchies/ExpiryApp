@@ -44,8 +44,9 @@
         EditText title;
         EditText days;
         ImageView avatar;
-
+        // instantiates a new item class
         items item = new items();
+        // allos the file to be accessed by the entire scope
         File file;
 
 
@@ -91,22 +92,23 @@
                         file = createFile();
                     } catch (IOException ex) {
 
+                        Snackbar.make(view, "An Error Occured", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
                     }
                     // if the file hasnt been written to execute the following
                     if (file != null) {
                         //sets the profile picture
                         item.setProfiler(imageFilePath);
                         // creates a uri for the file so it can be accessed
-                        Uri photoURI = FileProvider.getUriForFile(getContext(), "com.example.expiryapp", file);
+                        Uri fileToPhoto = FileProvider.getUriForFile(getContext(), "com.example.expiryapp", file);
                         // puts uri into the camera intent as put extra
-                        camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, fileToPhoto);
                         // start activity for result is sent
                         startActivityForResult(camera_intent, 123);
-                        // avatar/imageView2 is updated accordingly if it succceeded
+                        // avatar/imageView2 is updated accordingly if it succeeded
                         Glide.with(getContext()).asBitmap().load(imageFilePath).into(avatar);
 
-
-
+                        Snackbar.make(view, "Image added", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
                     }
                 }
@@ -125,7 +127,6 @@
                    // if title is null or number of days hasn't been set
                     // it doesn't preform the action
                     if(!(noDays == -1 || Title == null)){
-
                         // creates a new item passing through the header/title
                         item.setHeading(Title);
                         // sets date object
@@ -144,12 +145,11 @@
                             item.setExpiryDate(date);
                             // add and inserts the item
                             addItems(item);
-
-                            Snackbar.make(view, "item added: ", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
                             // instantiates nav controller and navigates back to nav home
                             NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
+                            // pops the top of the stack i.e addItem
                             navController.popBackStack();
+                            // navigates to a fresh nav_home
                             navController.navigate(R.id.nav_home);
 
                         } catch (ParseException e) {

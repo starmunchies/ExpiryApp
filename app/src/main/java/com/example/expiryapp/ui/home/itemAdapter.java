@@ -6,9 +6,12 @@ import static com.example.expiryapp.R.drawable.ico;
 import static java.lang.Math.floor;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -28,7 +33,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentViewHolder> {
+public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentViewHolder>{
     // constructor passes the context and saves it here
     Context context;
     // sets array list to what is passed in the constructor
@@ -98,7 +103,8 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
             holder.expiration.setTextColor(Color.RED);
 
         }
-        // TODO: 29/11/2022 add url from and from storage to images taken
+
+
         String check = items.getProfiler();
         holder.imageId.setImageResource(ico);
 
@@ -108,8 +114,17 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
             @Override
             // will show extra info and launch a new intent
             public void onClick(View view) {
-                Snackbar.make(view, "item clicked :" + getId(holder.getAdapterPosition()), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "item clicked :" + getId(holder.getAdapterPosition()), Snackbar.LENGTH_LONG)
+                        //.setAction("Action", null).show();
+
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("item", items);
+                Intent i = new Intent(context, viewItem.class);
+                i.putExtras(bundle);
+
+                context.startActivity(i);
+
 
             }
 
@@ -119,8 +134,17 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
 
             public boolean onLongClick(View view) {
-                Snackbar.make(view, "item long clicked :" + getId(holder.getAdapterPosition()), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "item long clicked :" + getId(holder.getAdapterPosition()), Snackbar.LENGTH_LONG)
+                       // .setAction("Action", null).show();
+
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("item", items);
+                Intent i = new Intent(context,updateItem.class);
+                i.putExtras(bundle);
+
+                context.startActivity(i);
+
                 return true;
             }
         });
@@ -138,7 +162,7 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
         notifyDataSetChanged();
     }
 
-    //@TODO Ddd insert method that will add to the database and to the array list
+
     public void itemInsert(items item){
         addItems(item);
         itemsArrayList.add(item);

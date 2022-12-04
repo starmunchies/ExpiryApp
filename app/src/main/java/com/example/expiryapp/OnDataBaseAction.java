@@ -10,7 +10,7 @@ import java.util.List;
 @Dao
 public interface OnDataBaseAction {
 
-    @Query("SELECT * FROM Expiry")
+    @Query("SELECT * FROM Expiry ORDER BY date(date) asc ")
     abstract public List<items> getAll();
 
     @Query("DELETE FROM Expiry")
@@ -22,7 +22,7 @@ public interface OnDataBaseAction {
     @Query("DELETE FROM expiry WHERE id = :taskId")
     void deleteExpiryFromId(int taskId);
 
-    @Query("UPDATE expiry SET profiler = :profiler WHERE id = :id")
-    void updateAnExistingRow(int id, String profiler);
+    @Query("UPDATE expiry SET profiler = :profiler,heading= :heading WHERE id = :id")
+    void updateAnExistingRow(int id, String profiler,String heading);
 
 }
