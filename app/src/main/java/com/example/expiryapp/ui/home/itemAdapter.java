@@ -6,7 +6,6 @@ import static com.example.expiryapp.R.drawable.ico;
 import static java.lang.Math.floor;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,14 +19,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.expiryapp.DatabaseAccessLayer;
 import com.example.expiryapp.R;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -114,9 +110,6 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
             @Override
             // will show extra info and launch a new intent
             public void onClick(View view) {
-                //Snackbar.make(view, "item clicked :" + getId(holder.getAdapterPosition()), Snackbar.LENGTH_LONG)
-                        //.setAction("Action", null).show();
-
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("item", items);

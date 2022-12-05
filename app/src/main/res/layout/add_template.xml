@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/additem"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/addtemplate"
     android:background="#FFFFFF"
     android:backgroundTint="#FFFFFF">
 
+
+
     <Button
-        android:id="@+id/cameraIntent"
+        android:id="@+id/cameraIntentv1"
         android:layout_width="78dp"
         android:layout_height="33dp"
         android:background="#AAAAAA"
@@ -23,7 +24,7 @@
         app:layout_constraintVertical_bias="0.784" />
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/submitv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hapticFeedbackEnabled="true"
@@ -36,7 +37,7 @@
         app:layout_constraintVertical_bias="0.79" />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/namev1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -50,7 +51,7 @@
         app:layout_constraintVertical_bias="0.37" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView3v1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name:"
@@ -62,7 +63,7 @@
         app:layout_constraintVertical_bias="0.289" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textView5v1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Expiry in days:"
@@ -73,7 +74,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/editTextNumberv1"
         android:layout_width="215dp"
         android:layout_height="42dp"
         android:ems="10"
@@ -85,7 +86,7 @@
         app:layout_constraintVertical_bias="0.571" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView2v1"
         android:layout_width="82dp"
         android:layout_height="94dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,6 +95,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.219"
-        tools:srcCompat="@tools:sample/avatars" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
