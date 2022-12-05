@@ -3,7 +3,9 @@ package com.example.expiryapp;
 import android.content.Context;
 
 import androidx.room.Room;
-
+// reference: https://blog.devgenius.io/implementing-room-database-bc9e4deb6600
+// had issues with the database classes given in lab project
+// decided to use the database example I found from here
 public class DatabaseAccessLayer {
     private Context mCtx;
     private static DatabaseAccessLayer mInstance;
@@ -30,3 +32,4 @@ public class DatabaseAccessLayer {
         return appDatabase;
     }
 }
+// end reference

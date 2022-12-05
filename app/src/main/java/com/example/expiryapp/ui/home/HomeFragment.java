@@ -1,7 +1,6 @@
 package com.example.expiryapp.ui.home;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -68,29 +67,25 @@ public class HomeFragment extends Fragment {
         // set recycler view to the adapter
         recyclerview.setAdapter(itemAdapter);
 
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        fm.addOnBackStackChangedListener(
+        // sees if its its been popped back to in the stack and triggers a refresh
+
+        FragmentManager backStack = getActivity().getSupportFragmentManager();
+        backStack.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
                     public void onBackStackChanged() {
-
                        getItems();
                        itemAdapter.refresh(itemsArrayList);
                         Log.d("test","called");
-
-
                     }
                 });
 
 
 
         button.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-
                 // Create new fragment and transaction
                 Fragment addItem = new addItem();
-
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
@@ -100,8 +95,6 @@ public class HomeFragment extends Fragment {
 
                 // Commit the transaction
                 transaction.commit();
-
-
             }
         });
 
@@ -132,20 +125,20 @@ public class HomeFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 // Query listen that will filter the text
-                ArrayList<items> filterMe = new ArrayList<items>();
+                ArrayList<items> filteredArrayList = new ArrayList<items>();
 
                 for (items item : itemsArrayList) {
                     // uses contain to see  if the item heading matches the inputted text
                     // forces it to lowercase
                     if (item.getHeading().toLowerCase().contains(newText.toLowerCase())) {
                         // if its a match add to the filterMe array
-                        filterMe.add(item);
+                        filteredArrayList.add(item);
                     }
                 }
                 // if the array isn't empty set filtered list as
                 // the new array list
-                if (!filterMe.isEmpty()) {
-                    itemAdapter.searchFilter(filterMe);
+                if (!filteredArrayList.isEmpty()) {
+                    itemAdapter.searchFilter(filteredArrayList);
                 }
                 return false;
             }
@@ -158,7 +151,7 @@ public class HomeFragment extends Fragment {
     private void getItems() {
 
         @SuppressLint("StaticFieldLeak")
-        class saveTaskInBackend extends AsyncTask<Void, Void, Void> {
+        class doAsyncTask extends AsyncTask<Void, Void, Void> {
 
             @Nullable
             @SuppressLint("WrongThread")
@@ -179,14 +172,14 @@ public class HomeFragment extends Fragment {
                 super.onPostExecute(aVoid);
             }
         }
-        saveTaskInBackend st = new saveTaskInBackend();
-        st.execute();
+        doAsyncTask bg = new doAsyncTask();
+        bg.execute();
     }
 
     // this populates the data if no other function is called
     private void dataCreate() {
         @SuppressLint("StaticFieldLeak")
-        class saveTaskInBackend extends AsyncTask<Void, Void, Void> {
+        class doAsyncTask extends AsyncTask<Void, Void, Void> {
            
             @Override
             protected Void doInBackground(Void... voids) {
@@ -220,7 +213,7 @@ public class HomeFragment extends Fragment {
                 super.onPostExecute(aVoid);
             }
         }
-        saveTaskInBackend bg = new saveTaskInBackend();
+        doAsyncTask bg = new doAsyncTask();
         bg.execute();
     }
     @Override

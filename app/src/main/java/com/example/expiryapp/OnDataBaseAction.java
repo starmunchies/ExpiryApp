@@ -21,18 +21,22 @@ public interface OnDataBaseAction {
     @Query("DELETE FROM Expiry")
     void deleteTheList();
 
-    @Query("DELETE FROM expiry WHERE id = :taskId")
-    void deleteExpiryFromId(int taskId);
+    @Query("DELETE FROM expiry WHERE id = :Id")
+    void deleteExpiryFromId(int Id);
 
     @Query("UPDATE expiry SET profiler = :profiler,heading= :heading WHERE id = :id")
     void updateAnExistingRow(int id, String profiler,String heading);
 
 
     // queries used to add to template
-    @Insert
-    void insertTemplateData(templateGall task);
+
+    @Query("DELETE FROM template WHERE id = :Id")
+    void deleteTemplateFromId(int Id);
 
     @Insert
-    void insertExpiryData(items task);
+    void insertTemplateData(templateGall item);
+
+    @Insert
+    void insertExpiryData(items item);
 
 }

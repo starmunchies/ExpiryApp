@@ -29,6 +29,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
+//refrence: https://www.youtube.com/watch?v=UBgXVGgTaHk
+// use of recycler view within a frag
 public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentViewHolder>{
     // constructor passes the context and saves it here
     Context context;
@@ -100,8 +102,6 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
 
         }
 
-
-        String check = items.getProfiler();
         holder.imageId.setImageResource(ico);
 
         Glide.with(context.getApplicationContext()).asBitmap().load(items.getProfiler()).into(holder.imageId);
@@ -120,8 +120,6 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
 
 
             }
-
-
         });
         // on long click will open a new edit intent
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
@@ -163,9 +161,11 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
 
     }
 
+    // reference: https://blog.devgenius.io/implementing-room-database-bc9e4deb6600
+    // found an example that extends async and used it as the base
     private void addItems(items item) {
         @SuppressLint("StaticFieldLeak")
-        class saveTaskInBackend extends AsyncTask<Void, Void, Void> {
+        class doAsyncTask extends AsyncTask<Void, Void, Void> {
 
             @Nullable
             @SuppressLint("WrongThread")
@@ -182,7 +182,7 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
                 super.onPostExecute(aVoid);
             }
         }
-        saveTaskInBackend bg = new saveTaskInBackend();
+        doAsyncTask bg = new doAsyncTask();
         bg.execute();
 
     }
@@ -208,7 +208,7 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
     private void deleteItems(items item) {
 
         @SuppressLint("StaticFieldLeak")
-        class saveTaskInBackend extends AsyncTask<Void, Void, Void> {
+        class doAsyncTask extends AsyncTask<Void, Void, Void> {
 
             @Nullable
             @SuppressLint("WrongThread")
@@ -225,9 +225,10 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
                 super.onPostExecute(aVoid);
             }
         }
-        saveTaskInBackend bg = new saveTaskInBackend();
+        doAsyncTask bg = new doAsyncTask();
         bg.execute();
     }
+
 
     @Override
     // returns count of array list

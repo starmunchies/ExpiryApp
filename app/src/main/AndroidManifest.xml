@@ -31,6 +31,9 @@
         <activity android:name=".ui.home.viewItem"
             tools:ignore="Instantiatable" />
 
+        <activity android:name=".ui.gallery.addItemFromTemplate"
+            tools:ignore="Instantiatable" />
+
         <activity android:name=".ui.home.updateItem"
             tools:ignore="Instantiatable" />
 

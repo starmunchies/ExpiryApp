@@ -98,7 +98,7 @@ public class updateItem extends AppCompatActivity {
                     // puts uri into the camera intent as put extra
                     camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, fileToPhoto);
                     // start activity for result is sent
-                    startActivityForResult(camera_intent, 123);
+                    startActivityForResult(camera_intent, 666);
 
                 }
             }
@@ -106,7 +106,8 @@ public class updateItem extends AppCompatActivity {
         });
     }
 
-
+    // reference: https://medium.com/android-news/androids-new-image-capture-from-a-camera-using-file-provider-dd178519a954
+    // creating an  image file and saving it to a directory
     private File createFile() throws IOException {
         // time stamp is created to as part of its uniqueness to log and upload
         String timeStamp = new SimpleDateFormat("HHmmss", Locale.getDefault()).format(new Date());
@@ -128,7 +129,7 @@ public class updateItem extends AppCompatActivity {
 
     private void updateItems(items item) {
         @SuppressLint("StaticFieldLeak")
-        class saveTaskInBackend extends AsyncTask<Void, Void, Void> {
+        class doAsyncTask extends AsyncTask<Void, Void, Void> {
 
             @Nullable
             @SuppressLint("WrongThread")
@@ -145,7 +146,7 @@ public class updateItem extends AppCompatActivity {
                 super.onPostExecute(aVoid);
             }
         }
-        saveTaskInBackend bg = new saveTaskInBackend();
+        doAsyncTask bg = new doAsyncTask();
         bg.execute();
 
     }
@@ -154,7 +155,7 @@ public class updateItem extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 123 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == 666 && resultCode == Activity.RESULT_OK) {
 
             Glide.with(getApplicationContext()).asBitmap().load(pathToImage).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(avatar);
         }

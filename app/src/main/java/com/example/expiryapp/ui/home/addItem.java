@@ -1,5 +1,7 @@
     package com.example.expiryapp.ui.home;
 
+    import static android.content.Intent.getIntent;
+
     import android.annotation.SuppressLint;
     import android.content.Intent;
     import android.net.Uri;
@@ -77,6 +79,7 @@
             title = (EditText) view.findViewById(R.id.name);
             //number field needs to be set to zero otherwise it errors out
             days.setText("0");
+
 
 
             camerabutton.setOnClickListener(new View.OnClickListener() {
@@ -192,7 +195,8 @@
 
         }
 
-
+        // reference: https://medium.com/android-news/androids-new-image-capture-from-a-camera-using-file-provider-dd178519a954
+        // creating an  image file and saving it to a directory
         private File createFile() throws IOException {
             // time stamp is created to as part of its uniqueness to log and upload
             String timeStamp = new SimpleDateFormat("HHmmss", Locale.getDefault()).format(new Date());
@@ -210,6 +214,7 @@
             // return the file image object
             return image;
         }
+        //end reference
 
 
 

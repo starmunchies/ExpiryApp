@@ -15,11 +15,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expiryapp.DatabaseAccessLayer;
 import com.example.expiryapp.R;
+import com.google.android.material.snackbar.Snackbar;
 
 
 import java.text.ParseException;
@@ -59,7 +61,7 @@ public class GalleryFragment extends Fragment {
         homeFragSearchView.setIconifiedByDefault(false);
 
         //dataCreate();
-        getItems();
+        getTemplateItems();
         itemAdapter = new templateAdapter(getContext(), itemsArrayList);
         // set recycler view to the adapter
         recyclerview.setAdapter(itemAdapter);
@@ -84,6 +86,23 @@ public class GalleryFragment extends Fragment {
             }
         });
 
+        new ItemTouchHelper(new androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT | androidx.recyclerview.widget.ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                //on recycler view item swiped then we are deleting the item of our recycler view.
+                Snackbar.make(view, "item deleted: " + itemAdapter.getId(viewHolder.getAdapterPosition()), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                // passes the position of the adapter
+                itemAdapter.itemRemove(viewHolder.getAdapterPosition());
+
+
+            }
+        }).attachToRecyclerView(recyclerview);
+
 
         homeFragSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -94,20 +113,20 @@ public class GalleryFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 // Query listen that will filter the text
-                ArrayList<templateGall> filterMe = new ArrayList<templateGall>();
+                ArrayList<templateGall> filterArrayList = new ArrayList<templateGall>();
 
                 for (templateGall item : itemsArrayList) {
                     // uses contain to see  if the item heading matches the inputted text
                     // forces it to lowercase
                     if (item.getHeading().toLowerCase().contains(newText.toLowerCase())) {
                         // if its a match add to the filterMe array
-                        filterMe.add(item);
+                        filterArrayList.add(item);
                     }
                 }
                 // if the array isn't empty set filtered list as
                 // the new array list
-                if (!filterMe.isEmpty()) {
-                    itemAdapter.searchFilter(filterMe);
+                if (!filterArrayList.isEmpty()) {
+                    itemAdapter.searchFilter(filterArrayList);
                 }
                 return false;
             }
@@ -117,10 +136,10 @@ public class GalleryFragment extends Fragment {
 
 
     }
-    private void getItems() {
+    private void getTemplateItems() {
 
         @SuppressLint("StaticFieldLeak")
-        class saveTaskInBackend extends AsyncTask<Void, Void, Void> {
+        class doAsyncTask extends AsyncTask<Void, Void, Void> {
 
             @Nullable
             @SuppressLint("WrongThread")
@@ -141,14 +160,14 @@ public class GalleryFragment extends Fragment {
                 super.onPostExecute(aVoid);
             }
         }
-        saveTaskInBackend st = new saveTaskInBackend();
+        doAsyncTask st = new doAsyncTask();
         st.execute();
     }
 
 
     public void dataCreate(){
         @SuppressLint("StaticFieldLeak")
-        class saveTaskInBackend extends AsyncTask<Void, Void, Void> {
+        class doAsyncTask extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
@@ -183,7 +202,7 @@ public class GalleryFragment extends Fragment {
                 super.onPostExecute(aVoid);
             }
         }
-        saveTaskInBackend bg = new saveTaskInBackend();
+        doAsyncTask bg = new doAsyncTask();
         bg.execute();
     }
 
