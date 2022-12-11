@@ -1,3 +1,6 @@
+//part of the fragmentation example given by android studio
+// this controls the navigation and the inflation of the navbar
+
 package com.example.expiryapp;
 
 import android.os.Bundle;

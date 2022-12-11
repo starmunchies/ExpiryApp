@@ -1,3 +1,6 @@
+// used for template table object
+// lets us save templates to be used in the future to invoke items
+// of similar type
 package com.example.expiryapp.ui.gallery;
 
 import androidx.room.ColumnInfo;
@@ -16,14 +19,15 @@ public class templateGall implements Serializable {
 
         @PrimaryKey(autoGenerate  = true)
         private int id;
-
+        //sets the heading
         @ColumnInfo(name = "heading")
         public String heading;
 
-
+        // sets the avatar icon
         @ColumnInfo(name = "profiler")
         public String profiler;
 
+        // sets no days the item would be viable for
         @ColumnInfo(name = "days")
         public String expiryDate;
 
@@ -31,7 +35,7 @@ public class templateGall implements Serializable {
         public String getExpiryDate() throws ParseException {
             return expiryDate;
         }
-
+        //sets the expiry date
         public void setExpiryDate(String expiryDate) throws ParseException {
             //  sets the format that the date is represented in string format
             this.expiryDate = expiryDate;

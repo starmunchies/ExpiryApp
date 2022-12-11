@@ -1,3 +1,6 @@
+// this class allows the user to update the items object from the db
+// works by opening an intent and opening a serialized object to be used and updated to the dao
+
 package com.example.expiryapp.ui.home;
 
 import android.annotation.SuppressLint;
@@ -31,40 +34,55 @@ import java.util.Date;
 import java.util.Locale;
 
 public class updateItem extends AppCompatActivity {
+    // object saved here
     items item;
+    // setting objects for xml variables
     EditText heading;
     ImageView avatar;
     Button submit;
     Button updateImage;
+
+    // used for image creation
     String pathToImage;
     File file;
 
+    // empty constructor needed to initialise an intent
     public updateItem() {
 
     }
 
+    // on creation of the class
     protected void onCreate(Bundle savedInstanceState) {
-        // return that the fragment has been created
 
+        // checks for any saved instances from the heirarchy
         super.onCreate(savedInstanceState);
+        // sets xml layout
         setContentView(R.layout.update_item);
+        // creates an intent
         Intent intent = getIntent();
+        // saes serialised object that was passed by put serializable
         item = (items) intent.getExtras().getSerializable("item");
 
+        // attaches variables to view
         avatar = findViewById(R.id.imageView3);
         updateImage = findViewById(R.id.updateimage);
         submit = findViewById(R.id.submitupdateform);
         heading = findViewById(R.id.updateheading);
         heading.setText(item.getHeading());
 
+        // loads in an image if it exists
         Glide.with(getApplicationContext()).asBitmap().load(item.getProfiler()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(avatar);
+        // button that updates info passed
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
+                    // sets the heading to the edit text
                     item.setHeading(heading.getText().toString());
+                    // passed to update item to background async
                     updateItems(item);
                     Snackbar.make(view, "Item updated", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    // returns to previous intent on stack
                     finish();
                 }catch (Exception e){
                     Snackbar.make(view, "An Error Occured", Snackbar.LENGTH_LONG).setAction("Action", null).show();
@@ -74,6 +92,7 @@ public class updateItem extends AppCompatActivity {
             }
         });
 
+        // opens camera intention
         updateImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +145,7 @@ public class updateItem extends AppCompatActivity {
         // return the file image object
         return imageFile;
     }
+    //eor
 
     private void updateItems(items item) {
         @SuppressLint("StaticFieldLeak")
@@ -137,7 +157,6 @@ public class updateItem extends AppCompatActivity {
             protected Void doInBackground(Void... voids) {
                 //gets a select all from the database and saves it to a list
                 DatabaseAccessLayer.getInstance(getApplicationContext()).getAppDatabase().dataBaseAction().updateAnExistingRow(item.getId(), item.getProfiler(), item.getHeading());
-                // iterates through the list and adds it to the itemArrayList
                 return null;
             }
 
@@ -152,11 +171,13 @@ public class updateItem extends AppCompatActivity {
     }
 
     @Override
+    // on return of the intent
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
-
+        // if it was succesfull
         if (requestCode == 666 && resultCode == Activity.RESULT_OK) {
-
+            // load the image
             Glide.with(getApplicationContext()).asBitmap().load(pathToImage).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(avatar);
         }
     }

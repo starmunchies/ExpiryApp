@@ -1,3 +1,7 @@
+    // allows for an item to be added to the database
+    // uses a variety pf features suh as camera intents
+    // image creation, date conversion and database updates.
+
     package com.example.expiryapp.ui.home;
 
     import static android.content.Intent.getIntent;
@@ -40,7 +44,7 @@
     import java.util.Locale;
 
     public class addItem extends Fragment {
-        // adding these as public o everything in the scope has access to them
+        // adding these as public so everything in the scope has access to them
         Button camerabutton;
         Button submit;
         EditText title;
@@ -48,7 +52,7 @@
         ImageView avatar;
         // instantiates a new item class
         items item = new items();
-        // allos the file to be accessed by the entire scope
+        // allows the file to be accessed by the entire scope
         File file;
 
 
@@ -68,6 +72,7 @@
 
         }
 
+        // once the view has been inflated call this
 
         public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
@@ -81,15 +86,13 @@
             days.setText("0");
 
 
-
+            // when camera button is clicked an intent will be instantiated
             camerabutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    // implicit intent
                     Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     // Start the activity with camera_intent, and request pic id
-
-
                     try {
                         // creates and saves the file
                         file = createFile();
@@ -107,7 +110,7 @@
                         // puts uri into the camera intent as put extra
                         camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, fileToPhoto);
                         // start activity for result is sent
-                        startActivityForResult(camera_intent, 123);
+                        startActivityForResult(camera_intent, 666);
                         // avatar/imageView2 is updated accordingly if it succeeded
                         Glide.with(getContext()).asBitmap().load(imageFilePath).into(avatar);
 
@@ -126,7 +129,6 @@
                     Title = title.getText().toString();
                     //set number of days and parses it to an int
                     noDays = Integer.parseInt(days.getText().toString());
-
                    // if title is null or number of days hasn't been set
                     // it doesn't preform the action
                     if(!(noDays == -1 || Title == null)){
@@ -144,7 +146,7 @@
                         //Log.d("noDays",date);
 
                         try {
-                            // passes the string and sets expiryDSate
+                            // passes the string and sets expiryDate
                             item.setExpiryDate(date);
                             // add and inserts the item
                             addItems(item);
@@ -170,14 +172,15 @@
 
         private void addItems(items item) {
             // talks to database
-            @SuppressLint("StaticFieldLeak")
+
             // runs an async task
+            @SuppressLint("StaticFieldLeak")
             class saveTaskInBackend extends AsyncTask<Void, Void, Void> {
 
                 @Nullable
                 @SuppressLint("WrongThread")
                 @Override
-                // in backgrounf
+                // in background
                 protected Void doInBackground(Void... voids) {
                     //inserts object into the database
                     DatabaseAccessLayer.getInstance(getActivity()).getAppDatabase().dataBaseAction().insertExpiryData(item);
@@ -198,13 +201,14 @@
         // reference: https://medium.com/android-news/androids-new-image-capture-from-a-camera-using-file-provider-dd178519a954
         // creating an  image file and saving it to a directory
         private File createFile() throws IOException {
-            // time stamp is created to as part of its uniqueness to log and upload
+            // create a timestamp to add to img
             String timeStamp = new SimpleDateFormat("HHmmss", Locale.getDefault()).format(new Date());
-            // adds time stamp to the filename
+
+            // create a unique filename that cant be replicated
             String imageFileName = "TEMP_IMG_" + timeStamp + "_";
-            // gets the directory from the files_path xml file
+           // gets the directory from the directory_pictures located in the xml files
             File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            // creates the image and saves it to a file object
+            // creates an object of the image
             File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
             // sets the string to the absolute path of file
@@ -215,8 +219,4 @@
             return image;
         }
         //end reference
-
-
-
-
     }

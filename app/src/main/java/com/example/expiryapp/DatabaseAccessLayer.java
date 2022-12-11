@@ -1,3 +1,4 @@
+// this builds the database and returns the object
 package com.example.expiryapp;
 
 import android.content.Context;
@@ -7,15 +8,17 @@ import androidx.room.Room;
 // had issues with the database classes given in lab project
 // decided to use the database example I found from here
 public class DatabaseAccessLayer {
-    private Context mCtx;
+    private Context context;
     private static DatabaseAccessLayer mInstance;
 
     //our app database object
     private AppDatabase appDatabase;
 
-    private DatabaseAccessLayer(Context mCtx) {
-        this.mCtx = mCtx;
-        appDatabase = Room.databaseBuilder(mCtx, AppDatabase.class, "expiry.db")
+    private DatabaseAccessLayer(Context context) {
+        this.context = context;
+
+        //create the name of the db and build
+        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "expiry.db")
                 .fallbackToDestructiveMigration()
                 .build();
     }

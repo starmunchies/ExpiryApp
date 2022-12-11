@@ -1,3 +1,6 @@
+// This class lets a user pick a specified template and import it into the items class
+// to allow for automatic making of an item
+
 package com.example.expiryapp.ui.gallery;
 
 import android.annotation.SuppressLint;
@@ -40,7 +43,7 @@ public class addItemFromTemplate extends AppCompatActivity {
     ImageView avatar;
     // instantiates a new item class
     //items item = new items();
-    // allos the file to be accessed by the entire scope
+    // allows the file to be accessed by the entire scope
     File file;
 
 
@@ -142,11 +145,7 @@ public class addItemFromTemplate extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-
-
             }
-
-
         });
 
     }
@@ -156,7 +155,7 @@ public class addItemFromTemplate extends AppCompatActivity {
         // talks to database
         @SuppressLint("StaticFieldLeak")
                 // runs an async task
-        class saveTaskInBackend extends AsyncTask<Void, Void, Void> {
+        class doAsyncTask extends AsyncTask<Void, Void, Void> {
 
             @Nullable
             @SuppressLint("WrongThread")
@@ -174,12 +173,13 @@ public class addItemFromTemplate extends AppCompatActivity {
                 super.onPostExecute(aVoid);
             }
         }
-        saveTaskInBackend bg = new saveTaskInBackend();
+        doAsyncTask bg = new doAsyncTask();
         bg.execute();
 
     }
 
-
+    // reference: https://medium.com/android-news/androids-new-image-capture-from-a-camera-using-file-provider-dd178519a954
+    // creating an  image file and saving it to a directory
     private File createFile() throws IOException {
         // time stamp is created to as part of its uniqueness to log and upload
         String timeStamp = new SimpleDateFormat("HHmmss", Locale.getDefault()).format(new Date());
@@ -197,6 +197,8 @@ public class addItemFromTemplate extends AppCompatActivity {
         // return the file image object
         return image;
     }
+
+    // end of reference
 
 
 

@@ -1,3 +1,5 @@
+// database itself
+// specify
 package com.example.expiryapp;
 
 import androidx.annotation.NonNull;

@@ -1,3 +1,5 @@
+// Gallery fragment this is where the template recycler view will be accessed by the user
+// allows user to delete a template, to add a template and to also add an item to the expiry table
 package com.example.expiryapp.ui.gallery;
 
 import android.annotation.SuppressLint;
@@ -30,15 +32,21 @@ import java.util.List;
 
 public class GalleryFragment extends Fragment {
 
+    // array list of templates
     ArrayList<templateGall> itemsArrayList = new ArrayList<>();
+    // headings for data creation
     String[] heading;
+    // recyclerView used for inflating list
     RecyclerView recyclerview;
+    // search view to search templates
     SearchView homeFragSearchView;
+    // button to add a new template
     Button button;
+    // template list for conversion to array list late
     List<templateGall> list;
     com.example.expiryapp.ui.gallery.templateAdapter itemAdapter;
 
-
+    // inflates the gallery nav
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -46,6 +54,7 @@ public class GalleryFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_gallery, container, false);
     }
 
+    // once the view has been created this is called
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -66,6 +75,7 @@ public class GalleryFragment extends Fragment {
         // set recycler view to the adapter
         recyclerview.setAdapter(itemAdapter);
 
+        // when the fab has been pressed call add template
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -86,6 +96,7 @@ public class GalleryFragment extends Fragment {
             }
         });
 
+        // used to delete the item from array list and db when swiped left or right
         new ItemTouchHelper(new androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT | androidx.recyclerview.widget.ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -103,7 +114,7 @@ public class GalleryFragment extends Fragment {
             }
         }).attachToRecyclerView(recyclerview);
 
-
+        // used to listen for changes in text and changes the the list based on what it contains
         homeFragSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -130,12 +141,12 @@ public class GalleryFragment extends Fragment {
                 }
                 return false;
             }
-
         });
 
 
 
     }
+    // populates arraylist for recycler view with templates from the ROOM database
     private void getTemplateItems() {
 
         @SuppressLint("StaticFieldLeak")
@@ -160,8 +171,8 @@ public class GalleryFragment extends Fragment {
                 super.onPostExecute(aVoid);
             }
         }
-        doAsyncTask st = new doAsyncTask();
-        st.execute();
+        doAsyncTask bg = new doAsyncTask();
+        bg.execute();
     }
 
 

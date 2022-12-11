@@ -1,3 +1,5 @@
+// template adapter used by the recycler view to inflate the home navigation fragment
+// allows a user to delete add and invoke a new template as an item
 package com.example.expiryapp.ui.home;
 
 import static android.app.PendingIntent.getActivity;
@@ -29,8 +31,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
-//refrence: https://www.youtube.com/watch?v=UBgXVGgTaHk
-// use of recycler view within a frag
+
 public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentViewHolder>{
     // constructor passes the context and saves it here
     Context context;
@@ -162,7 +163,7 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
     }
 
     // reference: https://blog.devgenius.io/implementing-room-database-bc9e4deb6600
-    // found an example that extends async and used it as the base
+    // found an example that extends async and used it as the boiler template
     private void addItems(items item) {
         @SuppressLint("StaticFieldLeak")
         class doAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -196,17 +197,17 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
 
 
 
-
+    // temporarily sets the filteredList to the array list
     public void searchFilter(ArrayList<items> filteredList) {
-        // sets the filteredList to the array list
         itemsArrayList = filteredList;
        // updates the adapted list accordingly
         notifyDataSetChanged();
-
 }
-
+    // deletes a specific item passed to it from the array list as well as the expiry table
+    // based on the id of the object
     private void deleteItems(items item) {
 
+        // creates a background thread to execute the slow running task
         @SuppressLint("StaticFieldLeak")
         class doAsyncTask extends AsyncTask<Void, Void, Void> {
 
@@ -237,7 +238,7 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.homeFragmentVi
     }
 
 
-
+    // sets the view from list_items xml
     public static class homeFragmentViewHolder extends RecyclerView.ViewHolder {
 
         TextView heading;

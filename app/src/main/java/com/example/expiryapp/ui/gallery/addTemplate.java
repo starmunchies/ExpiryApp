@@ -1,3 +1,5 @@
+// this class allows a user to add a template to the template Adapter
+// includes features such as camera and updating of main fragment automatically
 package com.example.expiryapp.ui.gallery;
 
 import android.annotation.SuppressLint;
@@ -45,7 +47,7 @@ public class addTemplate extends Fragment {
     ImageView avatar;
     // instantiates a new item class
     templateGall item = new templateGall();
-    // allos the file to be accessed by the entire scope
+    // allows the file to be accessed by the entire scope
     File file;
 
 
@@ -103,7 +105,7 @@ public class addTemplate extends Fragment {
                     // puts uri into the camera intent as put extra
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileToPhoto);
                     // start activity for result is sent
-                    startActivityForResult(cameraIntent, 666);
+                    startActivityForResult(cameraIntent, 123);
                     // avatar/imageView2 is updated accordingly if it succeeded
                     Glide.with(getContext()).asBitmap().load(imageFilePath).into(avatar);
 

@@ -1,3 +1,5 @@
+// home fragment from drawerLayout
+// includes elements that let you interact with the recycler view items
 package com.example.expiryapp.ui.home;
 
 import android.annotation.SuppressLint;
@@ -31,11 +33,17 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     // holds the object
     ArrayList<items> itemsArrayList = new ArrayList<>();
+    // holds the string headings for creation
     String[] heading;
+    // holds recycler object
     RecyclerView recyclerview;
+    // holds serach view object
     SearchView homeFragSearchView;
+    // holds button
     Button button;
+    // holds list of items before conversion
     List<items> list;
+    // instantiates a null itemAdapter
     itemAdapter itemAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +54,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+    // once item has been inflated this is called directly afterwards
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
        super.onViewCreated(view, savedInstanceState);
 
@@ -68,7 +77,6 @@ public class HomeFragment extends Fragment {
         recyclerview.setAdapter(itemAdapter);
 
         // sees if its its been popped back to in the stack and triggers a refresh
-
         FragmentManager backStack = getActivity().getSupportFragmentManager();
         backStack.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
@@ -80,7 +88,7 @@ public class HomeFragment extends Fragment {
                 });
 
 
-
+        // once the Floating action button has been clicked it opens an intent
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,12 +106,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // creates a new listener that checks if the item has ben slid either left or right
         new ItemTouchHelper(new androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT | androidx.recyclerview.widget.ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
 
+            // once it has been completely swiped away the item is deleted from the arraylist and database
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 //on recycler view item swiped then we are deleting the item of our recycler view.
@@ -115,7 +125,7 @@ public class HomeFragment extends Fragment {
             }
         }).attachToRecyclerView(recyclerview);
 
-
+        // query listener that check for updates from the searchbar
         homeFragSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -123,6 +133,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
+            // each time the query changes it checks if the array list contains the items
             public boolean onQueryTextChange(String newText) {
                 // Query listen that will filter the text
                 ArrayList<items> filteredArrayList = new ArrayList<items>();
@@ -147,7 +158,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-
+    // used to populate the recycler view with items from the db
     private void getItems() {
 
         @SuppressLint("StaticFieldLeak")
@@ -223,9 +234,10 @@ public class HomeFragment extends Fragment {
 
         getRefresh();
 
-        // put your code here...
+
 
     }
+
     //defunct code due to hard coding of fragment essentially
     // thanks android
     public void getRefresh(){

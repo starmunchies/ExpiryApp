@@ -1,3 +1,4 @@
+//item object used to generate a table in the SQLite ROOM Database
 package com.example.expiryapp.ui.home;
 
 import androidx.room.ColumnInfo;
@@ -34,9 +35,8 @@ public class items implements Serializable {
 
         return objectDate;
     }
-
+    //  sets the format that the date is represented in string format
     public void setExpiryDate(String expiryDate) throws ParseException {
-        //  sets the format that the date is represented in string format
        this.expiryDate = expiryDate;
     }
 
@@ -46,7 +46,7 @@ public class items implements Serializable {
         this.id = id;
     }
 
-    // this will get the absolute path for the image icon once set
+    // this will get the absolute path for the avatar icon once set
     public String getProfiler() {
         return profiler;
     }
